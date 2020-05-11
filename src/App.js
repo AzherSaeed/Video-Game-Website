@@ -17,6 +17,7 @@ class App extends React.Component{
   render(){
     return(
       <div>
+        <h1>Game</h1>
       <AddUser users={this.state.users}  onAddUser={this.createContact}/>
       <UserList users={this.state.users}/>
       </div>

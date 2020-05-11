@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 class AddUser extends React.Component{
     state = {
         user : {
-         userName : ""
+         userName : "",
+         firstName : ""
         },
         userExists  : false
      }
@@ -12,7 +13,7 @@ class AddUser extends React.Component{
      contactExist = currUserName  => {
          const users = this.props.users;
          for (let user of users) {
-             if(user.userName === currUserName){
+             if(user.userName === currUserName || user.firstName === currUserName){
                  return true
              }
          }
@@ -20,11 +21,14 @@ class AddUser extends React.Component{
      }
     handleSubmit = event => {
         event.preventDefault()
-        const userExists = this.contactExist(this.state.user.userName)
+        const userExists = this.contactExist(this.state.user.userName && this.state.user.firstName)
         
         if (!userExists) {
             this.props.onAddUser(this.state.user);
           }
+          this.setState({
+              userExists
+          })
         
     }
     onChangeInputs = (event) => {
@@ -36,16 +40,21 @@ class AddUser extends React.Component{
         }))
     }
     userDisable = () => {
-        const {  userName } = this.state.user;
-        return  userName === '';
+        // const {  userName } = this.state.user;
+        // return  userName === '';
       };
     render(){
-        const {userName} = this.state.user;
+        const {userName , firstName} = this.state.user;
         return(
             <div>
                 <h1>Add User</h1>
                 <form onSubmit={this.handleSubmit}> 
-                    <label>User Name :  </label>
+                    <label>First name :  </label>
+                    <input type="text"
+                    name="firstName"
+                    value={firstName}
+                    onChange={this.onChangeInputs}
+                    />
                     <input type="text"
                     name="userName"
                     value={userName}
