@@ -9,6 +9,7 @@ class App extends React.Component{
   }
 
   createContact = user => {
+    user.numGamesPlayed = 0
     this.setState(currState => ({
       users : [...currState.users , user]
     }))
@@ -16,7 +17,6 @@ class App extends React.Component{
   render(){
     return(
       <div>
-      <h1>App</h1>
       <AddUser users={this.state.users}  onAddUser={this.createContact}/>
       <UserList users={this.state.users}/>
       </div>

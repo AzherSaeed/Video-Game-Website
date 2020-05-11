@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 class AddUser extends React.Component{
     state = {
         user : {
-         firstName : "",
-         lastName : "",
          userName : ""
         },
         userExists  : false
@@ -27,10 +25,6 @@ class AddUser extends React.Component{
         if (!userExists) {
             this.props.onAddUser(this.state.user);
           }
-        console.log(userExists)
-        this.setState(() => ({
-            userExists
-        }))
         
     }
     onChangeInputs = (event) => {
@@ -42,27 +36,15 @@ class AddUser extends React.Component{
         }))
     }
     userDisable = () => {
-        const { firstName, lastName, userName } = this.state.user;
-        return firstName === '' || lastName === '' || userName === '';
+        const {  userName } = this.state.user;
+        return  userName === '';
       };
     render(){
-        const {firstName , lastName , userName} = this.state.user;
+        const {userName} = this.state.user;
         return(
             <div>
                 <h1>Add User</h1>
                 <form onSubmit={this.handleSubmit}> 
-                    <label>First Name :  </label>
-                    <input type="text"
-                    name="firstName"
-                    value={firstName}
-                    onChange={this.onChangeInputs}
-                    />
-                    <label>Last Name :  </label>
-                    <input type="text"
-                    name="lastName"
-                    value={lastName}
-                    onChange={this.onChangeInputs}
-                    />
                     <label>User Name :  </label>
                     <input type="text"
                     name="userName"
@@ -71,6 +53,11 @@ class AddUser extends React.Component{
                     />
                     <button disabled={this.userDisable()}>Add User</button>
                 </form>
+                {this.state.userExists ? (
+                    <p className="error">User already Exist</p>
+                ) : (
+                    ''
+                )}
             </div>
         )
     }
